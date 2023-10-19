@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#calc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: antiquewhite;
+    border: 2px solid black;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100dvh;
+    width: 100%;
+    background-color: rgb(155, 200, 238);
+}
+
+#calc-butt, #calc-quantity, #calc-opt{
+    border-radius: 15px;
+    padding: 5px;
+}
+
+
+

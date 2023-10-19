@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div id="calc">
+        <h1 id="calc-head"> Calculator </h1>
+        <div id="calc-elements">
+            <select id="calc-opt">
+                <option value=""> Select good </option>
+                <option value="1">Audi</option>
+                <option value="2">Porsche</option>
+                <option value="3">BMW</option>
+                <option value="4">Volkswagen</option>
+            </select>
+            <input id="calc-quantity" type="text">
+            <button id="calc-butt" onclick="return calculate();"> Calculate </button>
+            <output id="calc-out">Result:</output>
+        </div>
+        <div id="radios">
+            <label><input type="radio" name="prodOptions" value="option1">Basic equipment</label>
+            <label><input type="radio" name="prodOptions" value="option2">Standard equipment</label>
+            <label><input type="radio" name="prodOptions" value="option3">Optional equipment</label>
+          </div>
+          <div id="checkboxes">
+            <label><input type="checkbox" name="prop1">Insurance</label>
+            <label><input type="checkbox" name="prop2">Warranty</label>
+          </div>
+        </div>
+</body>
+
+</html>
