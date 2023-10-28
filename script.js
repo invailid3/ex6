@@ -1,109 +1,108 @@
-function calculate (){
-    let s = document.getElementById("calc-opt");
-    let select = s[0];
-    let price = 0;
-    let prices = getPrices();
-    let priceIndex = parseInt(select.value) - 1;
+const product = {
+  "type1": {
+    "checkbox": false,
+    "subproduct": false
+  },
+  "type2":{
+    "checkbox": false,
+    "subproduct": true
+  },
+  "type3":{
+    "checkbox": true,
+    "subproduct": false
+  }
+};
 
-    if (priceIndex >= 0) {
-        price = prices.prodTypes[priceIndex];
-      }
+const prices = {
+  "type1": 2000,
+  "type2": 10000,
+  "type3": 6000
+};
 
-    let quantityEl = document.getElementById("calc-quantity");
-    let quantity = 0;
-    quantity = parseInt(quantityEl.value);
-    
-    let radioCondition0 = document.getElementById("radios");
-    radioCondition0.style.display = (select.value == "" ? "block" : "none");
-
-    let checkCondition0 = document.getElementById("checkboxes");
-    checkCondition0.style.display = (select.value == "" ? "block" : "none");
-
-    let radioCondition = document.getElementById("radios");
-    radioCondition.style.display = (select.value == "2" ? "block" : "none");
-  
-    let radios = document.getElementsByName("prodOptions");
-    radios.forEach(function(radio) {
-      if (radio.checked) {
-        let optionPrice = prices.prodOptions[radio.value];
-        if (optionPrice !== undefined) {
-          price += optionPrice;
+function calculate(){
+  let selectElem = document.getElementsByName("prodType");
+  let select;
+  selectElem.forEach((child) => {
+    if(child.checked){
+      select = child.value;
+    }
+  });
+  let quantityEl = document.getElementById("quantity");
+  let quantity = parseInt(quantityEl.value);
+  let result = 0;
+  let subCheck;
+  let subPrice;
+  if(select === "type1"){
+    result = prices[select]*quantity;
+  }
+  else if(select === "type2"){
+    subCheck = document.getElementById("calc-subproduct-select-outter");
+    subPrice = parseInt(subCheck.value);
+    result = prices[select]*quantity + subPrice;
+  }
+  else if(select === "type3"){
+    subCheck = document.getElementById("checkboxes");
+    subPrice = 0;
+    subCheck.childNodes.forEach((child) => {
+      if (child.nodeName !== "#text") {
+        if(child.firstChild.checked === true){
+          subPrice += parseInt(child.firstChild.value);
         }
       }
     });
-
-    let checkCondition = document.getElementById("checkboxes");
-    checkCondition.style.display = (select.value == "2" ? "none" : "block");
-
-    let checkboxes = document.querySelectorAll("#checkboxes input");
-    checkboxes.forEach(function(checkbox) {
-      if (checkbox.checked) {
-        let propPrice = prices.prodProperties[checkbox.name];
-        if (propPrice !== undefined) {
-          price += propPrice;
-        }
-      }
-    });
-
-  
-    let resultEl = document.getElementById("calc-out");
-    let result = quantity * price;
-    if(isNaN(result)){
-        resultEl.innerHTML = "PLEASE SELECT";
-    }
-    else{
-        resultEl.innerHTML = "Result: " +  result;    
-    }
-}
-
-function getPrices() {
-    return {
-      prodTypes: [1000000, 2500000, 1500000, 3008000],
-      prodOptions: {
-        option2: 100000,
-        option3: 500000,
-      },
-      prodProperties: {
-        prop1: 10000,
-        prop2: 0,
-      }
-    };
+    result += prices[select]*quantity + subPrice;
   }
 
-window.addEventListener('DOMContentLoaded', function (event) {
+  let resultEl = document.getElementById("calc-out");
+   if(Number.isNaN(result) || result < 0){
+       resultEl.innerHTML = "Invalid input";
+   }
+   else{
+       resultEl.innerHTML = "Result: " +  result;
+   }
+}
 
-    let radioDiv = document.getElementById("radios");
-    radioDiv.style.display = "none";
 
-    let s = document.getElementById("calc-opt");
-    let select = s[0];
 
-    select.addEventListener("change", function(event) {
-        let target = event.target;
-        console.log(target.value);
-        calculate();
-    });
-
-    let checkboxess = document.getElementById("checkboxes");
-    checkboxess.style = "none";
-
-    let radios = document.getElementsByName("prodOptions");
-    radios.forEach(function(radio) {
-      radio.addEventListener("change", function(event) {
-        let r = event.target;
-        console.log(r.value);
-        calculate();
-      });
-    });
-
-    let checkboxes = document.querySelectorAll("#checkboxes input");
-  checkboxes.forEach(function(checkbox) {
-    checkbox.addEventListener("change", function(event) {
-      let c = event.target;
-      console.log(c.name);
-      console.log(c.value);
-      calculate();
-    });
+function changeType(){
+  let productTypeEls = document.getElementsByName("prodType");
+  let productType;
+  productTypeEls.forEach((child) => {
+    if(child.checked){
+      productType = child.value;
+    }
   });
-  calculate();
+
+  let selectEl;
+  if(product[productType].subproduct) {
+    selectEl = document.getElementById("calc-subproduct-select-outter");
+    selectEl.removeAttribute("disabled");
+    selectEl.style = "opacity: 1";
+  }
+  else {
+    selectEl = document.getElementById("calc-subproduct-select-outter");
+    selectEl.setAttribute("disabled", "");
+    selectEl.style = "opacity: 0";
+  }
+
+  let checkboxSelect;
+  if(product[productType].checkbox){
+    checkboxSelect = document.getElementById("checkboxes");
+    checkboxSelect.removeAttribute("disabled");
+    checkboxSelect.style = "opacity: 1";
+  }
+  else{
+    checkboxSelect = document.getElementById("checkboxes");
+    checkboxSelect.setAttribute("disabled", "");
+    checkboxSelect.style = "opacity: 0";
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  let buttonEl = document.getElementById("calc-butt");
+  buttonEl.addEventListener("click", calculate);
+
+  let productTypeEl = document.getElementById("product-type");
+  productTypeEl.addEventListener("change", changeType);
+
 });

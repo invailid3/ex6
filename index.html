@@ -10,29 +10,46 @@
 
 <body>
     <div id="calc">
-        <h1 id="calc-head"> Calculator </h1>
-        <div id="calc-elements">
-            <select id="calc-opt">
-                <option value=""> Select good </option>
-                <option value="1">Audi</option>
-                <option value="2">Porsche</option>
-                <option value="3">BMW</option>
-                <option value="4">Volkswagen</option>
-            </select>
-            <input id="calc-quantity" type="text">
-            <button id="calc-butt" onclick="return calculate();"> Calculate </button>
-            <output id="calc-out">Result:</output>
+        <div id="calc-head">
+            <h1>Calculator</h1>
         </div>
-        <div id="radios">
-            <label><input type="radio" name="prodOptions" value="option1">Basic equipment</label>
-            <label><input type="radio" name="prodOptions" value="option2">Standard equipment</label>
-            <label><input type="radio" name="prodOptions" value="option3">Optional equipment</label>
-          </div>
-          <div id="checkboxes">
-            <label><input type="checkbox" name="prop1">Insurance</label>
-            <label><input type="checkbox" name="prop2">Warranty</label>
-          </div>
+        <div id="calc-body">
+            <div id="calc-input">
+                <div id="calc-input-fields">
+                    <div id="product-type">
+                        <label><input type="radio" name="prodType" value="type1">Audi</label>
+                        <label><input type="radio" name="prodType" value="type2">Porsche </label>
+                        <label><input type="radio" name="prodType" value="type3">BMW</label>
+                    </div>
+                    <div id="calc-quantity">
+                        <input id="quantity" type="text">
+                    </div>
+                    <div id="calc-subproduct">
+                        <div id="calc-subproduct-select">
+                            <select id="calc-subproduct-select-outter" disabled style="opacity: 0;">
+                                <option value="0"> Select good </option>
+                                <option value="1">Basic equipment</option>
+                                <option value="2">Advanced equipment</option>
+                                <option value="3">Luxury equipment</option>
+                            </select>
+                        </div>
+                        <div id="checkboxes" style="opacity: 0;">
+                            <label><input type="checkbox" name="prop1" value="100">Insurance</label>
+                            <label><input type="checkbox" name="prop2" value="200">Warranty</label>
+                        </div>
+                    </div>
+                </div>
+                <div id="calc-button-outter">
+                    <button id="calc-butt"> Calculate </button>
+                </div>
+            </div>
+            <div id="calc-result">
+                <output id="calc-out">Result:</output>
+            </div>
         </div>
+
+    </div>
+
 </body>
 
 </html>
